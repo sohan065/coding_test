@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
+        'account_type',
+        'balance',
         'email',
         'password',
+        'remember_token'
     ];
 
     /**
@@ -38,8 +42,10 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    protected $casts = [];
+
+    public function transactions()
+    {
+        return  $this->hasMany(Transaction::class, 'user_id', 'id');
+    }
 }
